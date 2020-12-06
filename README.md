@@ -31,6 +31,7 @@ Visit http://localhost:8000/setup ✨
 ```bash
 docker-compose run --rm php
 docker-compose run --rm artisan
+docker-compose run --rm composer
 docker-compose run --rm npm
 ```
 
