@@ -1,0 +1,77 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: invoiceninja5_nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www/html
+      - ./dockerfiles/nginx:/etc/nginx/conf.d
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    container_name: invoiceninja5_php
+    working_dir: /var/www/html
+    tty: true
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    container_name: invoiceninja5_mysql
+    tty: true
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE1}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD1}
+      MYSQL_PASSWORD: ${DB_PASSWORD1}
+      MYSQL_USER: ${DB_USERNAME1}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  composer:
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+    container_name: invoiceninja5_composer
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    entrypoint: [ "composer", "--ignore-platform-reqs" ]
+
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    container_name: invoiceninja5_artisan
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    entrypoint: [ "php", "artisan" ]
+    depends_on:
+      - php
+
+  npm:
+    image: node:14-alpine
+    container_name: invoiceninja5_npm
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    entrypoint: [ "npm" ]
+    environment:
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+      PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
+    user: node
+
+volumes:
+  mysql-data:
