@@ -33,7 +33,16 @@ docker-compose run --rm artisan optimize
 ```
 Visit http://localhost:8000/setup ✨
 
-> Note: MySQL hostname is **mysql** by default (name of service in docker-compose)
+✔ **Note about connecting to MySQL:**
+
+MySQL info will correspond to your .env file. By default it is:
+```bash
+DB_HOST1=mysql
+DB_DATABASE1=ninja
+DB_USERNAME1=ninja
+DB_PASSWORD1=ninja
+DB_PORT1=3306
+```
 
 ## Available services:
 ```bash
