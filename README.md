@@ -24,8 +24,12 @@ PHANTOMJS_SECRET=
 Then run:
 ```bash
 docker-compose up -d --build
+
 docker-compose run --rm composer i
 docker-compose run --rm npm i
+
+docker-compose run --rm artisan key:generate
+docker-compose run --rm artisan optimize
 ```
 Visit http://localhost:8000/setup ✨
 
