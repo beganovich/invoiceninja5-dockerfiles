@@ -33,6 +33,8 @@ docker-compose run --rm artisan optimize
 ```
 Visit http://localhost:8000/setup ✨
 
+> Note: MySQL hostname is **mysql** by default (name of service in docker-compose)
+
 ## Available services:
 ```bash
 docker-compose run --rm php
