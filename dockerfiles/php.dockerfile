@@ -21,6 +21,7 @@ RUN apk add --no-cache \
           ca-certificates \
           ttf-freefont \
           nodejs \
+          npm \
           yarn
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
