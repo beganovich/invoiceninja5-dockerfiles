@@ -62,6 +62,8 @@ services:
     entrypoint: [ "php", "artisan" ]
     depends_on:
       - php
+    environment: 
+      SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
 
   npm:
     image: node:14-alpine
