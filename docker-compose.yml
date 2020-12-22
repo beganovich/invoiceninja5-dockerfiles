@@ -23,6 +23,8 @@ services:
       - ./:/var/www/html
     depends_on:
       - mysql
+    environment: 
+      SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
 
   mysql:
     image: mysql:8
