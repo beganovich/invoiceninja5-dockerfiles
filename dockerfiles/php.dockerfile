@@ -19,14 +19,6 @@ RUN apk add --no-cache \
           freetype-dev \
           harfbuzz \
           ca-certificates \
-          ttf-freefont \
-          nodejs \
-          npm \
-          yarn
-
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-RUN yarn add puppeteer@1.19.0
+          ttf-freefont
 
 USER development

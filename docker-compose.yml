@@ -3,7 +3,7 @@ version: "3"
 services:
   nginx:
     image: nginx:stable-alpine
-    container_name: invoiceninja5_nginx
+    container_name: invoiceninja5-nginx
     ports:
       - 8080:80
     volumes:
@@ -16,19 +16,20 @@ services:
     build:
       context: ./dockerfiles
       dockerfile: php.dockerfile
-    container_name: invoiceninja5_php
+    container_name: invoiceninja5-php
     working_dir: /var/www/html
     tty: true
     volumes:
       - ./:/var/www/html
     depends_on:
-      - mysql
-    environment: 
+      - mariadb
+    environment:
       SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
+      SNAPPDF_SKIP_DOWNLOAD: "true"
 
-  mysql:
-    image: mysql:8
-    container_name: invoiceninja5_mysql
+  mariadb:
+    image: mariadb:latest
+    container_name: invoiceninja5-mariadb
     tty: true
     command: --default-authentication-plugin=mysql_native_password
     environment:
@@ -45,29 +46,31 @@ services:
     build:
       context: ./dockerfiles
       dockerfile: composer.dockerfile
-    container_name: invoiceninja5_composer
+    container_name: invoiceninja5-composer
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
     entrypoint: [ "composer", "--ignore-platform-reqs" ]
+    environment:
+      SNAPPDF_SKIP_DOWNLOAD: "true"
 
   artisan:
     build:
       context: ./dockerfiles
       dockerfile: php.dockerfile
-    container_name: invoiceninja5_artisan
+    container_name: invoiceninja5-artisan
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
     entrypoint: [ "php", "artisan" ]
     depends_on:
       - php
-    environment: 
+    environment:
       SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
 
   npm:
     image: node:14-alpine
-    container_name: invoiceninja5_npm
+    container_name: invoiceninja5-npm
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
