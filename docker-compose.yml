@@ -5,10 +5,11 @@ services:
     image: nginx:stable-alpine
     container_name: invoiceninja5-nginx
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
       - ./:/var/www/html
       - ./dockerfiles/nginx:/etc/nginx/conf.d
+      - ./dockerfiles/certs:/usr/share/certs
     depends_on:
       - php
 
@@ -41,6 +42,9 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./dockerfiles/mysql/my.cnf:/etc/my.cnf
+    ports:
+      - 3306:3306
 
   composer:
     build:

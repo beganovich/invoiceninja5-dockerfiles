@@ -1,0 +1,12 @@
+- Install mkcert
+
+** For Fedora:
+- sudo dnf install nss-tools
+- Download the lastest release: https://github.com/FiloSottile/mkcert/releases
+- mv mkcert-vxxx-linux-amd64 mkcert
+- sudo mv mkcert /usr/local/bin
+
+mkcert -install
+mkcert localhost 127.0.0.1
+
+Move pem files into dockerfiles/certs & update the nginx/site.conf if needed.
