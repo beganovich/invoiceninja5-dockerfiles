@@ -71,6 +71,18 @@ services:
       - php
     environment:
       SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
+      
+  artisan-queue-listen:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    container_name: invoiceninja5-artisan-queue-listen
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: php artisan queue:listen
+    depends_on:
+      - php
 
   npm:
     image: node:14-alpine
