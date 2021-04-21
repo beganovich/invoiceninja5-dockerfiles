@@ -95,6 +95,12 @@ services:
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
       PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
     user: node
+    
+  redis:
+    image: redis:alpine
+    container_name: invoiceninja5-redis
+    ports:
+      - 6379:6379
 
 volumes:
   mysql-data:
