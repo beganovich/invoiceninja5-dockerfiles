@@ -12,6 +12,8 @@ services:
       - ./dockerfiles/certs:/usr/share/certs
     depends_on:
       - php
+    extra_hosts:
+      - "in5.localhost:192.168.1.2"
 
   php:
     build:
@@ -27,6 +29,9 @@ services:
     environment:
       SNAPPDF_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
       SNAPPDF_SKIP_DOWNLOAD: "true"
+    extra_hosts:
+      - "in5.localhost:192.168.1.2"
+  
 
   mariadb:
     image: mariadb:latest
@@ -34,10 +39,10 @@ services:
     tty: true
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE1}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD1}
-      MYSQL_PASSWORD: ${DB_PASSWORD1}
-      MYSQL_USER: ${DB_USERNAME1}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
@@ -104,3 +109,4 @@ services:
 
 volumes:
   mysql-data:
+
