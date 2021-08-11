@@ -103,5 +103,17 @@ services:
     ports:
       - 6379:6379
 
+  selenium:
+    image: 'selenium/standalone-chrome'
+    volumes:
+      - '/dev/shm:/dev/shm'
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: invoiceninja5-mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+
 volumes:
   mysql-data:
